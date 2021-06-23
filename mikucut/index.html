@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+ <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+  <meta name="description" content="这是用居合斩把从天空降下来的箱子啪嚓啪嚓的游戏。" />
+  <title>初音未来的居合斩</title>
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <script>
+    window.addEventListener('load',
+    function() {
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('../service-worker.js', {
+            scope: "./"
+        });
+    });
+  </script>
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link href="https://cdn.jsdelivr.net/npm/simplebar@4.2.3/dist/simplebar.min.css" rel="stylesheet" />
+  <link charset="utf-8" href="css/common.css" rel="stylesheet" />
+  <link charset="utf-8" href="css/app.css" rel="stylesheet" />
+  <script charset="utf-8" src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js" type="text/javascript" defer=""></script>
+  <script charset="utf-8" src="https://cdn.jsdelivr.net/npm/gsap@2.1.3/src/minified/TweenMax.min.js" type="text/javascript" defer=""></script>
+  <script charset="utf-8" src="https://cdn.jsdelivr.net/npm/three@0.106.0/build/three.min.js" type="text/javascript" defer=""></script>
+  <script charset="utf-8" src="https://cdn.jsdelivr.net/npm/simplebar@4.2.3/dist/simplebar.min.js" type="text/javascript" defer=""></script>
+  <script charset="utf-8" src="js/common.js" type="text/javascript" defer=""></script>
+  <script charset="utf-8" src="js/lib.js" type="text/javascript" defer=""></script>
+  <script charset="utf-8" src="js/app.js" type="text/javascript" defer=""></script>
+ </head>
+ <body>
+  <div id="view"></div>
+  <div id="top" class="scene">
+   <p id="kaiden"><span>Y 免許皆伝 Y</span></p>
+   <h1>初音未来的<br />居合斩 </h1>
+   <p class="st"><a href="javascript:;" id="bt_start" class="bt">开始</a></p>
+   <div class="preland">
+    <p><a href="javascript:;" id="bt_playerinfo" class="bt">玩家信息</a></p>
+    <p><a href="avascript:;" id="bt_howto" class="bt">游戏规则</a></p>
+   </div>
+   <p><a href="javascript:;" id="bt_credits" class="bt">名单 </a></p>
+  </div>
+  <div id="start" class="scene">
+   <p>60 秒 </p>
+   <h2><a href="javascript:;" id="bt_sec" class="bt">时间模式 </a></h2>
+   <p>生命 5 </p>
+   <h2><a href="javascript:;" id="bt_life" class="bt">无尽模式 </a></h2>
+   <h2 class="exp"><a href="javascript:;" id="bt_life_ex" class="bt">无尽进阶版 </a></h2>
+   <h2 class="ult"><a href="javascript:;" id="bt_life_ul" class="bt">无尽魔鬼版 </a></h2>
+   <p class="back"><a href="javascript:;" id="bt_back_sta" class="bt">返回 </a></p>
+  </div>
+  <div id="credits" class="scene">
+   <h2>人物造型 </h2>
+   <p>
+   <a href="https://piapro.net/pages/character" target="_blank" class="bt ja">初音ミク </a>
+   <a href="https://piapro.net/intl/en_character.html" target="_blank" class="bt en">Hatsune Miku </a>
+   <a href="https://piapro.net/intl/zh-cn_character.html" target="_blank" class="bt zh_cn">初音未来 </a>
+   </p>
+   <h2>声音、设计、建模和编程 </h2>
+   <p><a href="../" class="bt">daniwell </a>( <a href="../" class="bt">Twitter </a>) </p>
+   <h2>汉化、部分优化</h2>
+   <p><a href="../" class="bt">HayFuon</a></p>
+   <p class="back"><a href="javascript:;" id="bt_back_cre" class="bt">返回 </a></p>
+  </div>
+  <div id="playerinfo" class="scene">
+   <div id="scroll_area2" data-simplebar="" data-simplebar-auto-hide="false">
+    <div class="area">
+     <h2>高分 </h2>
+     <h3>时间模式</h3>
+     <p id="pi_timeattack">12,345 </p>
+     <h3>无尽模式</h3>
+     <p id="pi_endless">12,345 </p>
+     <h3 class="exp">无尽进阶版 </h3>
+     <p class="exp" id="pi_endless_ex">12,345 </p>
+     <h3 class="ult">无尽魔鬼版 </h3>
+     <p class="ult" id="pi_endless_ul">12,345 </p>
+     <h3>最大切入数 </h3>
+     <p id="pi_chain">12 </p>
+     <h3>斩下的箱子总数 </h3>
+     <p id="pi_totalbox">1,234 </p>
+     <h3 class="medal">勋章 </h3>
+     <table class="mt">
+      <tbody>
+       <tr data-m="ta_1000">
+        <th>Y </th>
+        <td>在时间模式中得分 <br />1000以上获得 </td>
+       </tr>
+       <tr data-m="ta_3939">
+        <th>Y </th>
+        <td>在时间模式中得分 <br />3939以上获得 </td>
+       </tr>
+       <tr data-m="ta_5000">
+        <th>Y </th>
+        <td>在时间模式中得分 <br />5000以上获得 </td>
+       </tr>
+       <tr data-m="ta_10000">
+        <th>Y </th>
+        <td>在时间模式中得分 <br />10000以上获得 </td>
+       </tr>
+       <tr data-m="ta_15000">
+        <th>Y </th>
+        <td>在时间模式中得分 <br />15000以上获得 </td>
+       </tr>
+       <tr data-m="en_1000">
+        <th>Y </th>
+        <td>无尽模式得分 <br />1000以上获得 </td>
+       </tr>
+       <tr data-m="en_3939">
+        <th>Y </th>
+        <td>无尽模式得分 <br />3939以上获得 </td>
+       </tr>
+       <tr data-m="en_5000">
+        <th>Y </th>
+        <td>无尽模式得分 <br />5000以上获得 </td>
+       </tr>
+       <tr data-m="en_10000">
+        <th>Y </th>
+        <td>无尽模式得分 <br />10000以上获得 </td>
+       </tr>
+       <tr data-m="en_50000">
+        <th>Y </th>
+        <td>无尽模式得分 <br />50000以上获得 </td>
+       </tr>
+       <tr data-m="en_100000">
+        <th>Y </th>
+        <td>无尽模式得分 <br />100000以上获得 </td>
+       </tr>
+       <tr data-m="ch_10">
+        <th>Y </th>
+        <td>最大切入数10以上 </td>
+       </tr>
+       <tr data-m="ch_39">
+        <th>Y </th>
+        <td>最大切入数39以上 </td>
+       </tr>
+       <tr data-m="ch_50">
+        <th>Y </th>
+        <td>最大切入数50以上 </td>
+       </tr>
+       <tr data-m="ch_100">
+        <th>Y </th>
+        <td>最大切入数100以上 </td>
+       </tr>
+       <tr data-m="tb_10">
+        <th>Y </th>
+        <td>斩下的箱子总数10以上 </td>
+       </tr>
+       <tr data-m="tb_100">
+        <th>Y </th>
+        <td>斩下的箱子总数100以上 </td>
+       </tr>
+       <tr data-m="tb_300">
+        <th>Y </th>
+        <td>斩下的箱子总数300以上 </td>
+       </tr>
+       <tr data-m="tb_500">
+        <th>Y </th>
+        <td>斩下的箱子总数500以上 </td>
+       </tr>
+       <tr data-m="all">
+        <th>Y </th>
+        <td>居合斩最厉害的靓仔 <br />（获得所有勋章） </td>
+       </tr>
+      </tbody>
+     </table>
+     <h3 class="medal_ex exp">勲章Ex </h3>
+     <table class="mt_ex exp">
+      <tbody>
+       <tr data-m="ta_20000">
+        <th>Y </th>
+        <td>时间模式得分 <br />20000以上获得 </td>
+       </tr>
+       <tr data-m="en_150000">
+        <th>Y </th>
+        <td>无尽模式得分 <br />150000以上获得 </td>
+       </tr>
+       <tr data-m="en_200000">
+        <th>Y </th>
+        <td>无尽模式得分 <br />200000以上获得 </td>
+       </tr>
+       <tr data-m="enex_1000">
+        <th>Y </th>
+        <td>无尽模式进阶版 <br />得分1000以上获得 </td>
+       </tr>
+       <tr data-m="enex_3939">
+        <th>Y </th>
+        <td>无尽模式进阶版 <br />得分3939以上获得 </td>
+       </tr>
+       <tr data-m="enex_5000">
+        <th>Y </th>
+        <td>无尽模式进阶版 <br />得分5000以上获得 </td>
+       </tr>
+       <tr data-m="enex_10000">
+        <th>Y </th>
+        <td>无尽模式进阶版 <br />得分10000以上获得 </td>
+       </tr>
+       <tr data-m="enex_50000">
+        <th>Y </th>
+        <td>无尽模式进阶版 <br />得分50000以上获得 </td>
+       </tr>
+       <tr data-m="enex_100000">
+        <th>Y </th>
+        <td>无尽模式进阶版 <br />得分100000以上获得 </td>
+       </tr>
+       <tr data-m="ch_150">
+        <th>Y </th>
+        <td>最大切入数150以上 </td>
+       </tr>
+       <tr data-m="ch_200">
+        <th>Y </th>
+        <td>最大切入数200以上 </td>
+       </tr>
+       <tr data-m="tb_1000">
+        <th>Y </th>
+        <td>斩下的箱子总数1000以上 </td>
+       </tr>
+       <tr data-m="tb_1500">
+        <th>Y </th>
+        <td>斩下的箱子总数1,500以上 </td>
+       </tr>
+       <tr data-m="tb_2000">
+        <th>Y </th>
+        <td>斩下的箱子总数2000以上 </td>
+       </tr>
+       <tr data-m="all">
+        <th>Y </th>
+        <td>真・居合斩最厉害的靓仔 <br />（获得全部勋章） </td>
+       </tr>
+      </tbody>
+     </table>
+     <h3 class="medal_ul ult">勲章Ult </h3>
+     <table class="mt_ul ult">
+      <tbody>
+       <tr data-m="ta_25000">
+        <th>Y </th>
+        <td>时间模式得分 <br />25000以上获得 </td>
+       </tr>
+       <tr data-m="en_300000">
+        <th>Y </th>
+        <td>无尽模式得分 <br />300000以上获得 </td>
+       </tr>
+       <tr data-m="enex_200000">
+        <th>Y </th>
+        <td>无尽模式进阶版 <br />得分200000以上获得 </td>
+       </tr>
+       <tr data-m="enul_1000">
+        <th>Y </th>
+        <td>无尽模式魔鬼版 <br />得分1000以上获得 </td>
+       </tr>
+       <tr data-m="enul_3939">
+        <th>Y </th>
+        <td>无尽模式魔鬼版 <br />得分3939以上获得 </td>
+       </tr>
+       <tr data-m="enul_5000">
+        <th>Y </th>
+        <td>无尽模式魔鬼版 <br />得分5000以上获得 </td>
+       </tr>
+       <tr data-m="enul_10000">
+        <th>Y </th>
+        <td>无尽模式魔鬼版 <br />得分10000以上获得 </td>
+       </tr>
+       <tr data-m="enul_50000">
+        <th>Y </th>
+        <td>无尽模式魔鬼版 <br />得分50000以上获得 </td>
+       </tr>
+       <tr data-m="enul_100000">
+        <th>Y </th>
+        <td>无尽模式魔鬼版 <br />得分100000以上获得 </td>
+       </tr>
+       <tr data-m="ch_250">
+        <th>Y </th>
+        <td>最大切入数250以上 </td>
+       </tr>
+       <tr data-m="ch_300">
+        <th>Y </th>
+        <td>最大切入数300以上 </td>
+       </tr>
+       <tr data-m="tb_2500">
+        <th>Y </th>
+        <td>斩下的箱子总数2500以上 </td>
+       </tr>
+       <tr data-m="tb_3000">
+        <th>Y </th>
+        <td>斩下的箱子总数3000以上 </td>
+       </tr>
+       <tr data-m="tb_3939">
+        <th>Y </th>
+        <td>斩下的箱子总数3939以上 </td>
+       </tr>
+       <tr data-m="all">
+        <th>Y </th>
+        <td>极真・居合斩最厉害的靓仔 <br />（获得全部勋章） </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+   </div>
+   <p class="back"><a href="javascript:;" id="bt_back_pinfo" class="bt">返回 </a></p>
+  </div>
+  <div id="tutorial" class="scene">
+   <h2>游戏规则 </h2>
+   <div id="scroll_area" data-simplebar="" data-simplebar-auto-hide="false">
+    <div class="area">
+     <table class="pc attention">
+      <tbody>
+       <tr>
+        <td>※ </td>
+        <td>这个游戏在电脑上也可以玩，但是推荐智能手机。 </td>
+       </tr>
+      </tbody>
+     </table>
+     <p class="gif"><img src="img/howto_1.png" /></p>
+     <table>
+      <tbody>
+       <tr>
+        <td>1. </td>
+        <td>箱子从头顶上掉下来了！ </td>
+       </tr>
+      </tbody>
+     </table>
+     <p class="gif"><img src="img/howto_2.png" /></p>
+     <table>
+      <tbody>
+       <tr>
+        <td>2. </td>
+        <td>拖拽画面将初音未来的方向朝向箱子！ </td>
+       </tr>
+      </tbody>
+     </table>
+     <p class="gif"><img src="img/howto_3.png" /></p>
+     <table>
+      <tbody>
+       <tr>
+        <td>3. </td>
+        <td><span class="pc">定时放开鼠标，居合斩！ </span><span class="sp">时机很好地放开手指，居合斩！ </span></td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+   </div>
+   <p class="back"><a href="javascript:;" id="bt_back_how" class="bt">返回 </a></p>
+  </div>
+  <div id="playing" class="scene">
+   <div id="countdown">
+    <div id="circle">
+     <svg class="svg_circle" viewbox="0 0 400 400">
+      <circle cx="200" cy="200" r="193">
+      </circle>
+     </svg>
+    </div>
+    <div id="count" class="notranslate">
+     <p>54321开始! </p>
+    </div>
+   </div>
+  </div>
+  <div id="playing_info" class="notranslate">
+   <table>
+    <tbody>
+     <tr id="info_score">
+      <td>
+       <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+        <path fill="none" d="M0 0h24v24H0V0z">
+        </path>
+        <path fill="#fff" d="M7 15h7v2H7zm0-4h10v2H7zm0-4h10v2H7zm12-4h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-.14 0-.27.01-.4.04-.39.08-.74.28-1.01.55-.18.18-.33.4-.43.64-.1.23-.16.49-.16.77v14c0 .27.06.54.16.78s.25.45.43.64c.27.27.62.47 1.01.55.13.02.26.03.4.03h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7-.25c.41 0 .75.34.75.75s-.34.75-.75.75-.75-.34-.75-.75.34-.75.75-.75zM19 19H5V5h14v14z">
+        </path>
+       </svg></td>
+      <td class="tex">1234 </td>
+     </tr>
+     <tr id="info_time">
+      <td>
+       <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+        <path fill="none" d="M0 0h24v24H0V0z">
+        </path>
+        <path fill="#fff" d="M12.5 8H11v6l4.75 2.85.75-1.23-4-2.37zm4.837-6.19l4.607 3.845-1.28 1.535-4.61-3.843zm-10.674 0l1.282 1.536L3.337 7.19l-1.28-1.536zM12 4c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z">
+        </path>
+       </svg></td>
+      <td class="tex">1:23.45 </td>
+     </tr>
+     <tr id="info_life">
+      <td>
+       <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+        <path fill="none" d="M0 0h24v24H0V0z">
+        </path>
+        <path fill="#fff" d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z">
+        </path>
+       </svg></td>
+      <td class="tex">IIIIIIIIII </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+  <div id="chain">
+    2 条链条
+  </div>
+  <div id="result" class="scene">
+   <h1>结果 </h1>
+   <h2>- 无尽模式 - </h2>
+   <p class="score">得分: <span id="tx_score">12,345 </span><span class="new">新纪录 </span></p>
+   <p class="share">
+       <a href="javascript:;" id="bt_sina" class="bt">分享到微博</a>&nbsp;
+       <a href="javascript:;" id="bt_qq" class="bt">分享到QQ空间</a>
+   </p>
+   <p class="back"><a href="javascript:;" id="bt_back_result" class="bt">返回 </a></p>
+  </div>
+  <div id="loading" class="scene">
+   <div>
+   </div>
+  </div>
+  <div id="loading2">
+   <div>
+   </div>
+  </div>
+  <div id="bt_back_game">
+   <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path fill="#fff" d="M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z">
+     <path fill="none" d="M0 0h24v24H0z">
+     </path>
+    </path>
+   </svg>
+  </div>
+  <div id="bt_volume">
+   <svg class="on" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path fill="#fff" d="M3 9v6h-1v-6h1zm13-7l-9 5v2.288l7-3.889v13.202l-7-3.889v2.288l9 5v-20zm-11 5h-5v10h5v-10zm13.008 2.093c.742.743 1.2 1.77 1.198 2.903-.002 1.133-.462 2.158-1.205 2.9l1.219 1.223c1.057-1.053 1.712-2.511 1.715-4.121.002-1.611-.648-3.068-1.702-4.125l-1.225 1.22zm2.142-2.135c1.288 1.292 2.082 3.073 2.079 5.041s-.804 3.75-2.096 5.039l1.25 1.254c1.612-1.608 2.613-3.834 2.616-6.291.005-2.457-.986-4.681-2.595-6.293l-1.254 1.25z">
+    </path>
+   </svg>
+   <svg class="off" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path fill="#fff" d="M3 9v6h-1v-6h1zm13-7l-9 5v2.288l7-3.889v13.202l-7-3.889v2.288l9 5v-20zm-11 5h-5v10h5v-10zm17.324 4.993l1.646-1.659-1.324-1.324-1.651 1.67-1.665-1.648-1.316 1.318 1.67 1.657-1.65 1.669 1.318 1.317 1.658-1.672 1.666 1.653 1.324-1.325-1.676-1.656z">
+    </path>
+   </svg>
+  </div>
+  <div id="bt_fullscreen">
+   <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path fill="#fff" d="M24 9h-2v-7h-7v-2h9v9zm-9 15v-2h7v-7h2v9h-9zm-15-9h2v7h7v2h-9v-9zm9-15v2h-7v7h-2v-9h9z">
+    </path>
+   </svg>
+  </div>
+ </body>
+</html>
